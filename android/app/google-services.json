@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "18171968655",
+    "project_id": "hangu-pesco-complaint",
+    "storage_bucket": "hangu-pesco-complaint.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18171968655:android:c530846ade0de6782504fa",
+        "android_client_info": {
+          "package_name": "com.example.hangu_pesco_complaints_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUdQGehrGTb3C7zS1-8xH2d0Jf8-N4Z2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

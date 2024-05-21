@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../components/custom_card_component.dart';
 import '../authentication/signin_screen/signin_screen.dart';
 import '../user_profile/profile_image.dart';
@@ -17,6 +18,7 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
+  final String phoneNumber = "1234567890";
   String? userID;
   String? userName;
 
@@ -64,7 +66,10 @@ class _UserHomeState extends State<UserHome> {
           centerTitle: true,
           actions: [
             IconButton(
-              icon: const Icon(Icons.exit_to_app,color: Colors.white,),
+              icon: const Icon(
+                Icons.exit_to_app,
+                color: Colors.white,
+              ),
               onPressed: () => _signOut(context),
             ),
           ],
@@ -135,7 +140,7 @@ class _UserHomeState extends State<UserHome> {
                 MyCard(
                   imagePath: "asset/post_complaints.png",
                   text: "Post Complaints",
-                  onTap: () async{
+                  onTap: () async {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -147,14 +152,15 @@ class _UserHomeState extends State<UserHome> {
                       },
                     );
 
-                    await Future.delayed(
-                        const Duration(seconds: 1));
+                    await Future.delayed(const Duration(seconds: 1));
 
                     Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  ComplaintsTypes(userID: userID.toString(),),
+                        builder: (context) => ComplaintsTypes(
+                          userID: userID.toString(),
+                        ),
                       ),
                     );
                   },
@@ -164,7 +170,7 @@ class _UserHomeState extends State<UserHome> {
                 MyCard(
                   imagePath: "asset/my_complaints.png",
                   text: "My Complaints ",
-                  onTap: () async{
+                  onTap: () async {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -176,14 +182,13 @@ class _UserHomeState extends State<UserHome> {
                       },
                     );
 
-                    await Future.delayed(
-                        const Duration(seconds: 1));
+                    await Future.delayed(const Duration(seconds: 1));
 
                     Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  MyComplaints(),
+                        builder: (context) => MyComplaints(),
                       ),
                     );
                   },
@@ -204,7 +209,6 @@ class _UserHomeState extends State<UserHome> {
                   onTap: () {
                     Navigator.push(
                       context,
-
                       MaterialPageRoute(
                         builder: (context) => const AboutUS(),
                       ),
@@ -227,9 +231,22 @@ class _UserHomeState extends State<UserHome> {
                 ),
               ],
             ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                final url = Uri.parse('tel:+92 1234567890');
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              child: Text('Call'),
+            ),
           ],
         ),
       ),
     );
   }
+
 }

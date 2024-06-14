@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../components/custom_card_component.dart';
 import '../authentication/signin_screen/signin_screen.dart';
+import '../authentication/signup_screen/phone_auth.dart';
 import '../user_profile/profile_image.dart';
 import 'all_home_screens/about_us_screen.dart';
 import 'all_home_screens/complaints_types.dart';
@@ -26,7 +27,7 @@ class _UserHomeState extends State<UserHome> {
   void getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      userID = prefs.getString('userID');
+      userID = prefs.getString('userId');
       userName = prefs.getString('name');
     });
   }
@@ -34,13 +35,12 @@ class _UserHomeState extends State<UserHome> {
   /// Sign-out Method ... >>>>
   void _signOut(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('userID');
-    prefs.remove('name');
+    prefs.remove('userId');
 
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => SigninScreen()),
+      MaterialPageRoute(builder: (context) => PhoneAuthScreen()),
     );
   }
 

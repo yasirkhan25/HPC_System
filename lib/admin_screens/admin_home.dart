@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core/color/color.dart';
 import '../user_screens/authentication/signin_screen/signin_screen.dart';
 import '../user_screens/complaint_screens/meter_request.dart';
+import '../user_screens/authentication/signup_screen/phone_auth.dart';
 import 'approved_complaints.dart';
 import 'meter_request.dart';
 
@@ -20,12 +21,12 @@ class AdminHome extends StatefulWidget {
 class _AdminHomeState extends State<AdminHome> {
   void _signOut(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('userID');
+    prefs.remove('userId');
 
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => SigninScreen()),
+      MaterialPageRoute(builder: (context) => PhoneAuthScreen()),
     );
   }
   @override

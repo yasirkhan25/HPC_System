@@ -132,8 +132,6 @@ class ComplaintProvider extends BaseViewModal {
       notifyListeners();
     }
   }
-
-
   Future<void> pickPaymentImageFromGallery() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);

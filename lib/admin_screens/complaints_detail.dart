@@ -67,20 +67,20 @@ class ApprovedComplaintsDetail extends StatelessWidget {
                           offset: Offset(0, 2),
                         )
                       ],
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25),
                       ),
                     ),
                     child: SingleChildScrollView(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 40,
                             ),
                             Center(
@@ -90,7 +90,7 @@ class ApprovedComplaintsDetail extends StatelessWidget {
                                   children: [
                                     Text(
                                       "${model.approvedComplaints[ComplaintsIndex].complaintTitle}",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20),
                                     ),

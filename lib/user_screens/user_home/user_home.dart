@@ -19,7 +19,7 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-  final String phoneNumber = "1234567890";
+  String? phoneNumber;
   String? userID;
   String? userName;
 
@@ -27,8 +27,10 @@ class _UserHomeState extends State<UserHome> {
   void getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      userID = prefs.getString('userId');
-      userName = prefs.getString('name');
+      userID = "G8FRJdHWudUvOeQ9ujYbeJKblCk1";
+      // userID = prefs.getString('userId');
+      userName = prefs.getString('userName');
+      phoneNumber = prefs.getString('phoneNumber');
     });
   }
 
@@ -54,12 +56,13 @@ class _UserHomeState extends State<UserHome> {
   Widget build(BuildContext context) {
     print("User ID in Home Screen is >>>> $userID");
     print("User Name is >>>> $userName");
+    print("User Phone Number is >>>> $phoneNumber");
     var mediaquery = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Home",
+            "User Home",
             style: Theme.of(context).textTheme.titleLarge,
           ),
           backgroundColor: const Color.fromRGBO(31, 79, 143, 1.0),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../admin_screens/admin_home.dart';
 import '../../../core/enums/view_state.dart';
@@ -16,7 +17,6 @@ class SignUpProvider extends BaseViewModal {
   final TextEditingController emailController = TextEditingController();
   // final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
 
   visiblePassword() async {
     print("Password state : $isVisiblePassword");
@@ -92,14 +92,14 @@ class SignUpProvider extends BaseViewModal {
     super.dispose();
   }
 
-   sendOTP(BuildContext context,phoneNumber,userName) async {
+  sendOTP(BuildContext context, phoneNumber) async {
     setState(ViewState.busy);
 
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneController.text,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await FirebaseAuth.instance.signInWithCredential(credential);
-        await handleUserLogin(context,phoneNumber,userName);
+        await handleUserLogin(context, phoneNumber);
       },
       verificationFailed: (FirebaseAuthException e) {
         setState(ViewState.idle);
@@ -109,25 +109,21 @@ class SignUpProvider extends BaseViewModal {
         );
       },
       codeSent: (String verId, int? resendToken) {
-
         setState(ViewState.idle);
 
         verificationId = verId;
-          otpSent = true;
-          notifyListeners();
-
+        otpSent = true;
+        notifyListeners();
       },
       codeAutoRetrievalTimeout: (String verId) {
-          verificationId = verId;
-          notifyListeners();
-
+        verificationId = verId;
+        notifyListeners();
       },
     );
   }
 
-   verifyOTP(BuildContext context,phoneNumber,userName) async {
+  verifyOTP(BuildContext context, phoneNumber) async {
     setState(ViewState.busy);
-
 
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
       verificationId: verificationId!,
@@ -136,11 +132,11 @@ class SignUpProvider extends BaseViewModal {
 
     try {
       UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithCredential(credential);
+          await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
 
       if (user != null) {
-        await handleUserLogin(context,phoneNumber,userName);
+        await handleUserLogin(context, phoneNumber);
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -152,7 +148,7 @@ class SignUpProvider extends BaseViewModal {
     notifyListeners();
   }
 
-   handleUserLogin(BuildContext context, phoneNumber,userName) async {
+  handleUserLogin(BuildContext context, phoneNumber) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -170,26 +166,23 @@ class SignUpProvider extends BaseViewModal {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Phone number verified successfully")),
       );
-      await saveUserInfoToSharedPreferences(user.uid, userName,phoneNumber);
+      await saveUserInfoToSharedPreferences(
+          user.uid, nameController.text, user.phoneNumber);
 
       setState(ViewState.idle);
-      print(":::::::::::>>>>${phoneNumber}");
       print(":::::::::::>>>>${user.phoneNumber}");
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-            user.phoneNumber == "+923100995210" && user.phoneNumber == "+923341965302" ? AdminHome() : UserHome()),);
-
+      Get.off(user.phoneNumber == "+923100995210" &&
+              user.phoneNumber == "+923341965302"
+          ? AdminHome()
+          : UserHome());
     }
   }
 
   Future<void> saveUserInfoToSharedPreferences(
-      String userId, String? phoneNumber,String? userName) async {
+      String userId, String? phoneNumber, String? userName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userId', userId);
     await prefs.setString('userName', userName ?? '');
     await prefs.setString('phoneNumber', phoneNumber ?? '');
   }
-
 }

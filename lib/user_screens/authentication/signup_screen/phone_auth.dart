@@ -207,9 +207,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                         child: TextButton(
                                           onPressed: () {
                                             if (model.otpSent) {
-                                              model.verifyOTP(context,model.phoneController.text,model.nameController.text);
+                                              model.verifyOTP(context,model.phoneController.text);
                                             } else {
-                                              model.sendOTP(context,model.phoneController.text,model.nameController.text);
+                                              model.sendOTP(context,model.phoneController.text);
                                             }
                                           },
 

@@ -103,4 +103,17 @@ class DatabaseServices {
       print('Exception@UpdateComplaintStatus=>$e');
     }
   }
+
+  ///  Update Complaints =====>>>
+  UpdateFeedback(ComplaintModel complaintModel,userId,complaintId) async {
+    print("User ID is ::: >>>>>>>>>${userId}");
+    print("User ID is ::: ??????>>>>${complaintId}");
+    try {
+      await FirebaseFirestore.instance.collection('AllComplaints').doc(userId)
+          .collection("Complaints").doc(complaintId)
+          .update({'feedBack':complaintModel.feedBack});
+    } catch (e) {
+      print('Exception@UpdateComplaintStatus=>$e');
+    }
+  }
 }

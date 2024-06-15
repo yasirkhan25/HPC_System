@@ -41,7 +41,7 @@ class ComplaintProvider extends BaseViewModal {
     userID = prefs.getString('userID');
     userEmail = prefs.getString('userEmail');
     userName = prefs.getString('name');
-    getAllComplaints(userID);
+    getAllComplaints("G8FRJdHWudUvOeQ9ujYbeJKblCk1");
 
     notifyListeners();
   }
@@ -185,5 +185,31 @@ class ComplaintProvider extends BaseViewModal {
       ),
     );
   }
+
+  /// Update Feedback Function ========>>>
+  updateFeedbackMethod(BuildContext context, String feedback, String userId, String complaintId ) async {
+    setState(ViewState.busy);
+    await Future.delayed(
+      const Duration(seconds: 1),);
+    try {
+      complaintModel.feedBack = feedback;
+
+      await databaseServices.UpdateFeedback(complaintModel,userId,complaintId);
+      print("Request Status $feedback");
+
+      setState(ViewState.idle);
+
+      await ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('your feed successfully updated'),
+        ),
+      );
+    } catch (e) {
+      setState(ViewState.idle);
+
+      print("Error in update complaint request: $e");
+    }
+  }
+
 
 }

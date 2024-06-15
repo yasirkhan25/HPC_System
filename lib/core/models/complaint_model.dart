@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class ComplaintModel extends ChangeNotifier {
   String? complaintID;
   String? userID;
@@ -13,6 +12,7 @@ class ComplaintModel extends ChangeNotifier {
   String? complaintTitle;
   String? complaintLocation;
   String? complaintDescription;
+  String? feedBack;
   String? userPhoneNo;
   String? complaintReferenceNo;
   String? complaintStatus;
@@ -29,6 +29,7 @@ class ComplaintModel extends ChangeNotifier {
     this.complaintTitle,
     this.complaintLocation,
     this.complaintDescription,
+    this.feedBack,
     this.userPhoneNo,
     this.complaintReferenceNo,
     this.complaintStatus,
@@ -46,6 +47,7 @@ class ComplaintModel extends ChangeNotifier {
     this.complaintTitle = json['complaintTitle'];
     this.complaintLocation = json['complaintLocation'];
     this.complaintDescription = json['complaintDescription'];
+    this.feedBack = json['feedBack'];
     this.userPhoneNo = json['userPhoneNo'];
     this.complaintReferenceNo = json['complaintReferenceNo'];
     this.complaintStatus = json['complaintStatus'];
@@ -63,6 +65,7 @@ class ComplaintModel extends ChangeNotifier {
       'complaintTitle': this.complaintTitle,
       'complaintLocation': this.complaintLocation,
       'complaintDescription': this.complaintDescription,
+      'feedBack': this.feedBack,
       'userPhoneNo': this.userPhoneNo,
       'complaintReferenceNo': this.complaintReferenceNo,
       'complaintStatus': this.complaintStatus,
@@ -70,3 +73,4 @@ class ComplaintModel extends ChangeNotifier {
     };
   }
 }
+

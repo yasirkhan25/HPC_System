@@ -37,7 +37,7 @@ class _AdminHomeState extends State<AdminHome> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Home",
+            "\nAdmin Home",
             style: Theme.of(context).textTheme.titleLarge,
           ),
           backgroundColor: const Color.fromRGBO(31, 79, 143, 1.0),

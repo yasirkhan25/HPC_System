@@ -51,7 +51,6 @@ class MyComplaints extends StatelessWidget {
                         horizontal: 15, vertical: 10),
                     child: InkWell(
                       onTap: () {
-                        currentIndex = index;
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -69,7 +68,7 @@ class MyComplaints extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) =>
                                   MyComplaintsDetail(
-                                    ComplaintsIndex: currentIndex,
+                                    complaintsIndex: index,
                                   ),
                             ),
                           );

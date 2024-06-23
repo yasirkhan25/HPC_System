@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,18 +21,24 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-  String? phoneNumber;
   String? userID;
+  String? phoneNumber;
+  String? fcmToken;
   String? userName;
+  File? profileImage;
 
   /// Get User Data ... >>>>
   void getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      userID = "G8FRJdHWudUvOeQ9ujYbeJKblCk1";
-      // userID = prefs.getString('userId');
-      userName = prefs.getString('userName');
+      userID = prefs.getString('userId');
       phoneNumber = prefs.getString('phoneNumber');
+      fcmToken = prefs.getString('fcmToken');
+      userName = prefs.getString('userName');
+      String? imagePath = prefs.getString('userImage');
+      if (imagePath != null) {
+        profileImage = File(imagePath);
+      }
     });
   }
 
@@ -38,6 +46,8 @@ class _UserHomeState extends State<UserHome> {
   void _signOut(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('userId');
+    prefs.remove('phoneNumber');
+    prefs.remove('userImage');
 
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
@@ -54,6 +64,7 @@ class _UserHomeState extends State<UserHome> {
 
   @override
   Widget build(BuildContext context) {
+    print("User fcmToker in Home Screen is >>>> $fcmToken");
     print("User ID in Home Screen is >>>> $userID");
     print("User Name is >>>> $userName");
     print("User Phone Number is >>>> $phoneNumber");
@@ -95,6 +106,7 @@ class _UserHomeState extends State<UserHome> {
               height: mediaquery.height * .31,
 
               child: Stack(children: [
+
                 // 1st container
                 Container(
                   // height: 80,
@@ -162,7 +174,7 @@ class _UserHomeState extends State<UserHome> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ComplaintsTypes(
-                          userID: userID.toString(),
+                          userID: userID.toString(),fcmToken: fcmToken.toString(),
                         ),
                       ),
                     );

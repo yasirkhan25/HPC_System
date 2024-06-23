@@ -27,6 +27,7 @@ class ComplaintProvider extends BaseViewModal {
   MeterRequestModel meterRequestModel = MeterRequestModel();
   bool isLoading = true;
   String? userID;
+  String? fcmToken;
   String? userEmail;
   String? userName;
 
@@ -38,10 +39,9 @@ class ComplaintProvider extends BaseViewModal {
   /// Get User Data ... >>>>
   void getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    userID = prefs.getString('userID');
-    userEmail = prefs.getString('userEmail');
-    userName = prefs.getString('name');
-    getAllComplaints("G8FRJdHWudUvOeQ9ujYbeJKblCk1");
+    userID = await prefs.getString('userId');
+    fcmToken = await prefs.getString('fcmToken');
+    getAllComplaints(userID);
 
     notifyListeners();
   }
@@ -62,7 +62,7 @@ class ComplaintProvider extends BaseViewModal {
   /// Get All Complaints ======>>>>
   void getAllComplaints(String? userID) async {
     isLoading = true;
-    print("???????????? user id : $userID");
+    print("'''''''''''''''''''''''''''''$userID");
 
     complaintStream =
         await databaseServices.getUserComplaints(userID.toString());
@@ -93,8 +93,8 @@ class ComplaintProvider extends BaseViewModal {
     complaintModel.createdAt = DateTime.now().toString();
     complaintModel.complaintStatus = "pending";
     complaintModel.complaintTitle = complaintTitle;
-    // complaintModel.userEmail = userEmail.toString();
-    complaintModel.userID = userID.toString();
+    complaintModel.userID = userID;
+    complaintModel.fcmToken = fcmToken;
     print(">>>>>>>>>>>33333333");
 
     await Future.delayed(Duration(seconds: 3));

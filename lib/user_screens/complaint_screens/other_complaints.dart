@@ -314,7 +314,7 @@ class OtherComplaints extends StatelessWidget {
                           if (model.formKey.currentState!.validate()) {
                             print(">>>>>>>>>>>..1111");
                             print(model.selectedComplaint);
-                            model.submitComplaint(context, model.selectedComplaint);
+                            model.submitComplaint(context, model.selectedComplaint,);
                           }
                         },
                         child: SaveButton(

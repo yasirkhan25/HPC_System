@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hangu_pesco_complaints_system/core/services/network_services.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/models/base_view_model.dart';
 import '../../../core/services/database_services.dart';
@@ -21,7 +22,6 @@ class AllComplaintProvider extends BaseViewModal {
     getMeterRequest();
   }
 
-
   List<ComplaintModel> pendingComplaints = [];
   List<ComplaintModel> urgentPendingComplaints = [];
   List<MeterRequestModel> meterRequest = [];
@@ -42,15 +42,19 @@ class AllComplaintProvider extends BaseViewModal {
       if (event.docs.isNotEmpty) {
         event.docs.forEach((element) {
           final post = ComplaintModel.fromJson(element.data());
-          if (post.complaintStatus == 'pending' && post.complaintTitle != "Meter Sparking/Wire Loose") {
+          if (post.complaintStatus == 'pending' &&
+              post.complaintTitle != "Meter Sparking/Wire Loose") {
             pendingComplaints.add(post);
             notifyListeners();
           }
-          if (post.complaintTitle == "Meter Sparking/Wire Loose" || post.complaintStatus == "pending" && post.complaintStatus == "approved") {
+          if (post.complaintTitle == "Meter Sparking/Wire Loose" ||
+              post.complaintStatus == "pending" &&
+                  post.complaintStatus == "approved") {
             urgentPendingComplaints.add(post);
             notifyListeners();
           }
-          if (post.complaintStatus == 'approved'&& post.complaintTitle != "Meter Sparking/Wire Loose") {
+          if (post.complaintStatus == 'approved' &&
+              post.complaintTitle != "Meter Sparking/Wire Loose") {
             approvedComplaints.add(post);
             notifyListeners();
           }
@@ -78,28 +82,34 @@ class AllComplaintProvider extends BaseViewModal {
             notifyListeners();
           }
 
-            notifyListeners();
-
+          notifyListeners();
         });
       }
     });
     notifyListeners();
   }
 
-
-
   /// Approved Request Function ========>>>
-  updateComplaintRequest(BuildContext context,String complaintStatus, ComplaintModel complaintModel, int index) async {
+  updateComplaintRequest(BuildContext context, String complaintStatus,
+      ComplaintModel complaintModel, int index) async {
     setState(ViewState.busy);
     await Future.delayed(
-      const Duration(seconds: 1),);
+      const Duration(seconds: 1),
+    );
     try {
+      await NetworkServices.sendNotification(
+          title: pendingComplaints[index].complaintTitle,
+          token: pendingComplaints[index].fcmToken,
+          body: "your complaint has been $complaintStatus ..!");
       print("2222222222222");
+      print("user fcmToken is :::>>> ${pendingComplaints[index].fcmToken}");
       print(complaintStatus);
       complaintModel.complaintStatus = complaintStatus;
 
       await databaseServices.UpdateComplaints(
-          complaintModel, pendingComplaints[index].complaintID, pendingComplaints[index].userID);
+          complaintModel,
+          pendingComplaints[index].complaintID,
+          pendingComplaints[index].userID);
       print("Request Status $complaintStatus");
 
       setState(ViewState.idle);
@@ -117,17 +127,26 @@ class AllComplaintProvider extends BaseViewModal {
   }
 
   /// emergency Request Function ========>>>
-  updateUrgentComplaintRequest(BuildContext context,String complaintStatus, ComplaintModel complaintModel, int index) async {
+  updateUrgentComplaintRequest(BuildContext context, String complaintStatus,
+      ComplaintModel complaintModel, int index) async {
     setState(ViewState.busy);
     await Future.delayed(
-      const Duration(seconds: 1),);
+      const Duration(seconds: 1),
+    );
     try {
+      await NetworkServices.sendNotification(
+          title: urgentPendingComplaints[index].complaintTitle,
+          token: urgentPendingComplaints[index].fcmToken,
+          body: "your complaint has been $complaintStatus ..!");
+
       print("2222222222222");
       print(complaintStatus);
       complaintModel.complaintStatus = complaintStatus;
 
       await databaseServices.UpdateComplaints(
-          complaintModel, urgentPendingComplaints[index].complaintID, urgentPendingComplaints[index].userID);
+          complaintModel,
+          urgentPendingComplaints[index].complaintID,
+          urgentPendingComplaints[index].userID);
       print("Request Status $complaintStatus");
 
       setState(ViewState.idle);
@@ -144,7 +163,6 @@ class AllComplaintProvider extends BaseViewModal {
     }
   }
 
-
   /// Date Format Method >>>>
   String dataFormate(String date) {
     DateTime inputDate = DateTime.parse(date);
@@ -152,5 +170,4 @@ class AllComplaintProvider extends BaseViewModal {
     String formattedDate = DateFormat('d MMM yyyy', 'en_US').format(inputDate);
     return formattedDate;
   }
-
 }

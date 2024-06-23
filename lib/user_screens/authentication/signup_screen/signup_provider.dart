@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ class SignUpProvider extends BaseViewModal {
   final authInstant = FirebaseAuth.instance;
   bool isVisiblePassword = true;
   final formKey = GlobalKey<FormState>();
+  FirebaseMessaging fcm = FirebaseMessaging.instance;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -140,7 +142,7 @@ class SignUpProvider extends BaseViewModal {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to verify OTP")),
+        const SnackBar(content: Text("Failed to verify OTP")),
       );
     }
     setState(ViewState.idle);
@@ -166,12 +168,15 @@ class SignUpProvider extends BaseViewModal {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Phone number verified successfully")),
       );
+
+      String? fcmToken = await fcm.getToken();
       await saveUserInfoToSharedPreferences(
-          user.uid, nameController.text, user.phoneNumber);
+          user.uid, user.phoneNumber,fcmToken!, nameController.text);
 
       setState(ViewState.idle);
       print(":::::::::::>>>>${user.phoneNumber}");
-      Get.off(user.phoneNumber == "+923100995210" &&
+      Get.off(
+          user.phoneNumber == "+923306542442" ||
               user.phoneNumber == "+923341965302"
           ? AdminHome()
           : UserHome());
@@ -179,10 +184,11 @@ class SignUpProvider extends BaseViewModal {
   }
 
   Future<void> saveUserInfoToSharedPreferences(
-      String userId, String? phoneNumber, String? userName) async {
+      String userId, String? phoneNumber,String fcmToken, String? userName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userId', userId);
-    await prefs.setString('userName', userName ?? '');
     await prefs.setString('phoneNumber', phoneNumber ?? '');
+    await prefs.setString('fcmToken', fcmToken ?? '');
+    await prefs.setString('userName', userName ?? '');
   }
 }

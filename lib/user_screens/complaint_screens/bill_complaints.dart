@@ -8,14 +8,14 @@ import '../../core/enums/view_state.dart';
 import 'complaints_provider.dart';
 
 class BillComplaint extends StatelessWidget {
-
+  String? UserId;
+  BillComplaint({this.UserId});
   @override
   Widget build(BuildContext context) {
 
     var mediaquery = MediaQuery.of(context).size;
     return Consumer<ComplaintProvider>(
         builder: (context, model, child) {
-          print("??????????????????? : ${model.userID}");
           return ModalProgressHUD(
             progressIndicator: CircularProgressIndicator(
               color: PrimaryColor,

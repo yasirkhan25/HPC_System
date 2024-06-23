@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -12,6 +12,31 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   File? selectedImage;
+  String userName = '';
+  String phoneNumber = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('userName') ?? 'User Name';
+      phoneNumber = prefs.getString('phoneNumber') ?? 'Phone Number';
+      String? imagePath = prefs.getString('userImage');
+      if (imagePath != null) {
+        selectedImage = File(imagePath);
+      }
+    });
+  }
+
+  Future<void> _saveUserImage(String path) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userImage', path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,36 +50,71 @@ class _UserProfileState extends State<UserProfile> {
           backgroundColor: const Color.fromRGBO(31, 79, 143, 1.0),
           centerTitle: true,
           leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back, color: Colors.white)),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+          ),
         ),
         body: Center(
-          child: Stack(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 200,
-                height: 200,
-                child: ClipOval(
-                  child: selectedImage != null
-                      ? Image.file(selectedImage!, fit: BoxFit.cover)
-                      : Image.asset(
-                          "asset/person.png",
-                          fit: BoxFit.contain,
-                        ),
-                ),
+              Stack(
+                children: [
+                  SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: ClipOval(
+                      child: selectedImage != null
+                          ? Image.file(selectedImage!, fit: BoxFit.cover)
+                          : Image.asset(
+                        "asset/person.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: IconButton(
+                      onPressed: () {
+                        showImagePickerOption(context);
+                      },
+                      icon: const Icon(Icons.add_a_photo,color: Colors.black,),
+                    ),
+                  ),
+                ],
               ),
-              Positioned(
-                bottom: 0,
-                left: 140,
-                child: IconButton(
-                  onPressed: () {
-                    showImagePickerOption(context);
-                  },
-                  icon: const Icon(Icons.add_a_photo),
-                ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Name: ",
+                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    userName,
+                    style: const TextStyle(fontSize: 25,fontWeight: FontWeight.w600),
+                  ),
+                ],
               ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Phone: ",
+                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    phoneNumber,
+                    style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 200,)
             ],
           ),
         ),
@@ -109,22 +169,22 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Future<void> _pickImageFromGallery() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
         selectedImage = File(pickedImage.path);
       });
+      _saveUserImage(pickedImage.path);
     }
   }
 
   Future<void> _pickImageFromCamera() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+    final pickedImage = await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
       setState(() {
         selectedImage = File(pickedImage.path);
       });
+      _saveUserImage(pickedImage.path);
     }
   }
 }

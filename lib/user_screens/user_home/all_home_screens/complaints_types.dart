@@ -9,7 +9,8 @@ import '../../complaint_screens/meter_request.dart';
 
 class ComplaintsTypes extends StatelessWidget {
   String? userID;
-   ComplaintsTypes({super.key,required this.userID});
+  String? fcmToken;
+   ComplaintsTypes({super.key,required this.userID,required this.fcmToken});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class ComplaintsTypes extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(
                             color: Colors.white,
                           ),

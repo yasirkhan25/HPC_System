@@ -22,6 +22,7 @@ class _AdminHomeState extends State<AdminHome> {
   void _signOut(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('userId');
+    prefs.remove('phoneNumber');
 
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(

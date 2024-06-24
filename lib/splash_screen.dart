@@ -34,6 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         MaterialPageRoute(
             builder: (context) =>
             user.phoneNumber == "+923341965302"||
+            user.phoneNumber == "+923100995210"||
             user.phoneNumber == "+923306542442"
                 ? const AdminHome()
                 : const UserHome()),

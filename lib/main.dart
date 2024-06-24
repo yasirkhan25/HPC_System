@@ -15,6 +15,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final fcmToken = await FirebaseMessaging.instance.getToken();
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
   print(fcmToken);
   runApp(MyApp());
 }
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const SplashScreen(),
+        home: const AdminHome(),
       ),
     );
   }

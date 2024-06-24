@@ -119,6 +119,8 @@ class AllComplaintProvider extends BaseViewModal {
           content: Text('complaint request $complaintStatus successfully!'),
         ),
       );
+      setState(ViewState.idle);
+
     } catch (e) {
       setState(ViewState.idle);
 

@@ -177,6 +177,7 @@ class SignUpProvider extends BaseViewModal {
       print(":::::::::::>>>>${user.phoneNumber}");
       Get.off(
           user.phoneNumber == "+923306542442" ||
+              user.phoneNumber == "+923100995210"||
               user.phoneNumber == "+923341965302"
           ? AdminHome()
           : UserHome());

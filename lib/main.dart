@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const AdminHome(),
+        home: const SplashScreen(),
       ),
     );
   }

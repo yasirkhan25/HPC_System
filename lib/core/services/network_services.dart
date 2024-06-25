@@ -1,45 +1,39 @@
-import 'dart:developer';
+import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import "package:googleapis_auth/auth_io.dart";
 
 class NetworkServices {
-
   /// Use service account credentials to get an authenticated and auto refreshing client.
-  static  Future<String> obtainAuthenticatedClient() async {
-    final accountCredentials = ServiceAccountCredentials.fromJson(
-        {
-          "type": "service_account",
-          "project_id": "hangu-pesco-complaint",
-          "private_key_id": "f312ac071be3dc31ca1a69cb91537e1f4b0d276d",
-          "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC9GOMg+a+sHmT2\nhK0UDHx6eqrKlH+qbdTdaqTNWSFnH1G0EixgeEtdqplPAjFJB3TRXPdCDKEN9Vv+\ndzpspVoqp7gMntdgQqyq3XB8uRyydbq24+OEws/YnBymSTEVL1cjJy/jZaLVIdb9\nNxFhi+g4qlIo3L/6TAa04PsxuWCAWQKnizx/xaMo/RYn+jy8iSnwX+RlJM/u/8qX\nJG0ZOoR6JvcNrruEaEwGd9yJmGm9KVHqpG+eXoay4OE80CZ1dEKn2duJBlc4qNZA\njYGCSSFzBCeiB1PiiYlC1eEzh4gZXym7ayZUp2krTgsoH0OlNOkuS/1QhMUHr/CD\nee/i3Ee5AgMBAAECggEAEH+xBI3oixvZSw2LNOg8farBh1yi0XXVCG8fOzgDQzY/\nOJcL1mx0hfMGPpemQXUUNxa1j6aesEM30DlqqHNabUWWOEqtJ83VdzCMOaOkmnkN\nbhru3WTqgd+oG8Wf0dWANLXc9qol5ZL26T/CZViRzczlj4FoQjBbNvG41Q8zuWr0\nDE7s1JhQSKFjJbwr8tlzPddDN37O5/ajf5LthM+cDO82CC1YdhM1dasqLi4f+71/\nv/36w5Guyf6tZkq7P+s1/XMqKPijueEQBaxk+7ptS9VToQ93Usi9sXNzWqwYmXqH\nvslca03BJUdzK/nsqsi7TuUg29maaa5uVaH6Im3c8QKBgQD5/Atv2FX8/TTKBrF7\ncoPXBt39r9yMdZOfQ5/hHwd34hWYqwZ9CeH6KEqLcMssgoNuquHa5qxEQAZM//I3\nNpX9FQ1b59GWPaPC+3hSZaHs4lh2Xlz1Y03dVhzaWLU3pNsA/XUWp4M0j/qSCdTi\nPhGDYOLq5XYvmjWUj6in7IHxcQKBgQDBpcOnOboBlR+8xXDzQF3AaAV9FZeq3Saw\nI0xbPA5JwNu68OWPu+XfwT0nwkDd8T4vKCfzcWSlZLawgudSvAHt85WfXCKS8e4H\nXgX41vYqzJnUt0j/7/SMy6AxnDI9C0XsriFYM6rR2TAveDIHyVtYQPnDNy/nNDaJ\noyOsfHYWyQKBgAPn7EXTG4TYb/q4IA3NvEGf2dgc51VKgQP8CoN5+KPm5G9+PJu3\ni9Bc0M1c9c+8OlGAWgcRk599YJvTY/V45N8PdSX6eUvfqq9hPoALFnydDMTMtKcg\n5haPQeQnfq1f5gwd6bZw55vqo/+kJ69hSOTEnscMzsvvnOa1V+1HxMABAoGAcRgh\nm1GQe4ofPf1FyRsnZc6angH1URnVlXsYBhSd958F9TjpqTdAupw93jGJ9tUEzz+x\njXEFKb8XHyFkfiJFMjZXhPmnS5C1xmG4NSs+G6LgmKXuoWL/vRbTWQXzJUmnLeJI\noR2TvvkMNj0JYxjLG1DfTY62kF4jF+FKXVtXEFkCgYEA9NSZIc0qJXcrO8ReLgk1\ngge9pYUkHm5uxyVz55V11q/NmPVAr3iEG6rHguGaNAhW7VHfVOGx+DSEMGtx+qeo\nFnI0ORJKWgXcX1sLdoMbWydXxclF6SpM/oFrn8jdZmd28Ep2ZsDHeqQ5Kd7M9fkN\nyWO9hhpS9tvP9EKr7eyF/kw=\n-----END PRIVATE KEY-----\n",
-          "client_email": "firebase-adminsdk-ln31w@hangu-pesco-complaint.iam.gserviceaccount.com",
-          "client_id": "111934154294217833246",
-          "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-          "token_uri": "https://oauth2.googleapis.com/token",
-          "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-          "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ln31w%40hangu-pesco-complaint.iam.gserviceaccount.com",
-          "universe_domain": "googleapis.com"
-        }
+  static Future<String> obtainAuthenticatedClient() async {
+    final accountCredentials = ServiceAccountCredentials.fromJson({
+      "type": "service_account",
+      "project_id": "hangu-pesco-complaint",
+      "private_key_id": "20c19b3801ea8ce77fea24b690e4c9b781219c72",
+      "private_key":
+          "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQClY3hvz0Fgo96N\nrw/zC+OBtGvQlUX6b67QwUaZ819UdlxUPAxxRLKYyReTpfj+nGnNpQmrJopp9YKp\nl/kdze33i3PVlSjOHlEW5+0ZU9RGV0yhT3wLOvVabDSk+7lBHKsSS3ZfA8Dj+D2x\nzt4lUzo4QlZ8wdiP/JcxBiZyryR6SESfI8JF8cV7l2RoV5ZvG6bbdE0tsoG1EPfX\nc4HcqtmEQKaGr2qLROS5tHlmkKtFqwNPcGZTo6u+H7nAAJ/AdW9ZKc0Mc9ww6D1K\nl953KV5fbaN6xY79fCipbFdg+se2ROgQequ2zoR1RAxH9f8jMYQmiYDhwX/+TdtZ\ntZIHZGC9AgMBAAECggEAOUQ+jRSKEjDbnFqcHq+kqKI03MX7M5KdSPpLfH4ZKbFM\nGfyq4EOFxcKHj9/d3ieBuSums+UF81eH1Tpij2/hMKBQTQm3VduIf3JyFh2BOJP8\n3DQeAvN4xkUGW4Qv6rxG/fA0PgUaMrWfgyRapjjxxU4vDUa/umefYGG9SWOcsVwq\n0YMKDe0HqwnWq7aLEdtRPxop8h6KJzLqKrkrDtUFXQJHt4nD6U5z2SU6/0m0WumI\nrwH12LjLxmaUgLkqR087LsrKN0LnP6p1pahK0g4M1eZ2PpBHk7WKOynidfymcp7k\nN0JGG5Oz3PAr4C1a18U70LwP9qdJXSJCHkBX0x1GXwKBgQDcuxR8Pxkg3Xp8lpEM\nKyLIHpPq+eE5/1UMEhI097u1tF6WVuG086HDcyRMmc2bL3RiRwi7CvBXnwJ6VpG9\nvzNvvFeg1JIP/C4eBgJewx/srT2lhvzE1ROlgh3CHp0bTj826Gs36l6G5FcrGUMG\nXEGbF0sC0qXiST9NyXPXDmu5dwKBgQC/0KKLRBAlUbGObRfxRpz9Gir6+zg2gNdT\nHflC6/BcmI7iSn1UuCa/J+CUoHD2PASlddNvWakHYlopdfKi+4EWyiewsv458ZKv\nWdDlGdiY9gYjC3ajUQw0PpWkbagQFaGhC47xgHAQgutTLPWNtfx3KJ32pzucCGsY\nkMDqGEgEawKBgQCnryu508mIMRkLKusX/nEW7Dvc52XVxIZcfCH+wTCFsnek6G3h\nJLCAJamu06zhtqRIwMP+LCo3tmGQhNGE/4rY2JENak9n+2Ehh9knGj7XcyiA5lKC\nSYj6VCW9QbqCcugNE3XYbaDQAwnBgRhs7Ysdgg2HIHXKuXBw7JinCJqHswKBgE6G\nzWSSUsHUdgpG4zxlmjOMGPhzDIpTqNNgPAGHsflWg3hk4nZihYpQewKdxGEqJQTP\n/eViIW7iduLuZI0QxcJctG8EeEukeFbNQFXqhN/qKI0ETmeB8KsazAxq0Bj1ohva\nLYT0/evkjQ6aI1UGofruZ+zofeDdGWsPJ8sucZ1NAoGBAIfpSPj5RbTbGfss7A8b\n0KvF2hgxKl2tpCsb3ecFwY4W67I3/sONFyHQcFY2XxMBVEwvcKMlelXo3nDWZcRY\nepKbrsOySzZ3kWgSsCdkEgYkrvaRvVVo5JseIkrQqFDj7yccfEwibTVHZsfG76nF\nXXUymrLXrl5U33ChG932lr4a\n-----END PRIVATE KEY-----\n",
+      "client_email":
+          "hangu-pesco-complaint@hangu-pesco-complaint.iam.gserviceaccount.com",
+      "client_id": "113228908028765268964",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url":
+          "https://www.googleapis.com/oauth2/v1/certs",
+      "client_x509_cert_url":
+          "https://www.googleapis.com/robot/v1/metadata/x509/hangu-pesco-complaint%40hangu-pesco-complaint.iam.gserviceaccount.com",
+      "universe_domain": "googleapis.com"
+    });
 
-    );
     var scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
 
-    AuthClient client = await clientViaServiceAccount(
-        accountCredentials, scopes);
-
-    log('accesstoken '+client.credentials.accessToken.data);
-
+    AuthClient client =
+        await clientViaServiceAccount(accountCredentials, scopes);
     return client.credentials.accessToken.data;
   }
 
-
   static Future sendNotification(
       {String? token, String? title, String? body}) async {
-
     String accessToken = await obtainAuthenticatedClient();
-    String serverKey =
-        'Bearer ' + accessToken;
+    String serverKey = 'Bearer ' + accessToken;
     Map<String, String> headerMap = {
       "Content-Type": "application/json",
       "Authorization": serverKey
@@ -54,20 +48,20 @@ class NetworkServices {
     };
 
     Map bodyMap = {
-      "message":{
-        "token":token,
-        "notification":notificationMap,
+      "message": {
+        "token": token,
+        "notification": notificationMap,
         "data": dataMap,
       }
     };
-
     var response = await http.post(
-        Uri.parse('https://fcm.googleapis.com/v1/projects/hangu-pesco-complaint/messages:send'),
+        Uri.parse(
+            'https://fcm.googleapis.com/v1/projects/hangu-pesco-complaint/messages:send'),
         headers: headerMap,
         body: jsonEncode(bodyMap));
-    log("responseee ${response.body}");
+    print("Response code: ${response.statusCode}");
+    print("Response body: ${response.body}");
     var data = jsonDecode(response.body);
-
-    return ;
+    return;
   }
 }

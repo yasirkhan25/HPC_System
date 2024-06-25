@@ -101,9 +101,8 @@ class AllComplaintProvider extends BaseViewModal {
           title: pendingComplaints[index].complaintTitle,
           token: pendingComplaints[index].fcmToken,
           body: "your complaint has been $complaintStatus ..!");
-      print("2222222222222");
       print("user fcmToken is :::>>> ${pendingComplaints[index].fcmToken}");
-      print(complaintStatus);
+      // print(complaintStatus);
       complaintModel.complaintStatus = complaintStatus;
 
       await databaseServices.UpdateComplaints(

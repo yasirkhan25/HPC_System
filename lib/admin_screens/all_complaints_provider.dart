@@ -93,15 +93,11 @@ class AllComplaintProvider extends BaseViewModal {
   updateComplaintRequest(BuildContext context, String complaintStatus,
       ComplaintModel complaintModel, int index) async {
     setState(ViewState.busy);
-    await Future.delayed(
-      const Duration(seconds: 1),
-    );
     try {
       await NetworkServices.sendNotification(
           title: pendingComplaints[index].complaintTitle,
           token: pendingComplaints[index].fcmToken,
-          body: "your complaint has been $complaintStatus ..!");
-      print("user fcmToken is :::>>> ${pendingComplaints[index].fcmToken}");
+          body: "your complaint has been $complaintStatus ..");
       // print(complaintStatus);
       complaintModel.complaintStatus = complaintStatus;
 
@@ -119,7 +115,6 @@ class AllComplaintProvider extends BaseViewModal {
         ),
       );
       setState(ViewState.idle);
-
     } catch (e) {
       setState(ViewState.idle);
 
@@ -131,9 +126,7 @@ class AllComplaintProvider extends BaseViewModal {
   updateUrgentComplaintRequest(BuildContext context, String complaintStatus,
       ComplaintModel complaintModel, int index) async {
     setState(ViewState.busy);
-    await Future.delayed(
-      const Duration(seconds: 1),
-    );
+
     try {
       await NetworkServices.sendNotification(
           title: urgentPendingComplaints[index].complaintTitle,

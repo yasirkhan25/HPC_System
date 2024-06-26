@@ -156,20 +156,6 @@ class _UserHomeState extends State<UserHome> {
                   imagePath: "asset/post_complaints.png",
                   text: "Post Complaints",
                   onTap: () async {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    );
-
-                    await Future.delayed(const Duration(seconds: 1));
-
-                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -186,20 +172,6 @@ class _UserHomeState extends State<UserHome> {
                   imagePath: "asset/my_complaints.png",
                   text: "My Complaints ",
                   onTap: () async {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    );
-
-                    await Future.delayed(const Duration(seconds: 1));
-
-                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -249,7 +221,7 @@ class _UserHomeState extends State<UserHome> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                final url = Uri.parse('tel:+92 1234567890');
+                final url = Uri.parse('tel:+923341965302');
                 if (await canLaunchUrl(url)) {
                   await launchUrl(url);
                 } else {

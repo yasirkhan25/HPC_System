@@ -39,10 +39,13 @@ class _MyComplaintsDetailState extends State<MyComplaintsDetail> {
                 color: PrimaryColor,
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   children: [
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +54,8 @@ class _MyComplaintsDetailState extends State<MyComplaintsDetail> {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: const Icon(Icons.clear, color: Colors.white)),
+                            child:
+                                const Icon(Icons.clear, color: Colors.white)),
                       ],
                     ),
                     const Text(
@@ -104,11 +108,11 @@ class _MyComplaintsDetailState extends State<MyComplaintsDetail> {
                                 SizedBox(height: 10),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Posted Date:   ",
@@ -142,7 +146,7 @@ class _MyComplaintsDetailState extends State<MyComplaintsDetail> {
                                     ),
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "${model.dataFormate(model.complaintRequests[widget.complaintsIndex].createdAt.toString())}",
@@ -183,7 +187,7 @@ class _MyComplaintsDetailState extends State<MyComplaintsDetail> {
                         SizedBox(height: 20),
                         ExpandableJobDescription(
                           complaintDescription:
-                          "${model.complaintRequests[widget.complaintsIndex].complaintDescription}",
+                              "${model.complaintRequests[widget.complaintsIndex].complaintDescription}",
                         ),
                         SizedBox(height: 20),
                         Text(
@@ -195,77 +199,98 @@ class _MyComplaintsDetailState extends State<MyComplaintsDetail> {
                         ),
                         SizedBox(height: 10),
                         model.complaintRequests[widget.complaintsIndex]
-                            .complaintImage !=
-                            null
+                                    .complaintImage !=
+                                null
                             ? Container(
-                          height: 200,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border:
-                            Border.all(width: 1, color: Colors.grey),
-                            image: DecorationImage(
-                                image: NetworkImage(model
-                                    .complaintRequests[widget
-                                    .complaintsIndex]
-                                    .complaintImage
-                                    .toString()) as ImageProvider,
-                                fit: BoxFit.fitWidth),
-                          ),
-                        )
-                            :  Row(
-                          children: [
-                            Icon(Icons.image_outlined,size: 20,),
-
-                            Text("  Image not uploaded"),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Divider(thickness: 1,color: Colors.grey,),
-                        SizedBox(height: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Feedback ",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                height: 200,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(width: 1, color: Colors.grey),
+                                  image: DecorationImage(
+                                      image: NetworkImage(model
+                                          .complaintRequests[
+                                              widget.complaintsIndex]
+                                          .complaintImage
+                                          .toString()) as ImageProvider,
+                                      fit: BoxFit.fitWidth),
                                 ),
-                                Icon(Icons.feedback_outlined,size: 20,),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-                            TextField(
-                              controller: _feedbackController,
-                              maxLines: 3,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Enter your feedback here...',
+                              )
+                            : const Row(
+                                children: [
+                                  Icon(
+                                    Icons.image_outlined,
+                                    size: 20,
+                                  ),
+                                  Text("  Image not uploaded"),
+                                ],
                               ),
-                            ),
-                            SizedBox(height: 10),
-                            ElevatedButton(
-                              onPressed: () {
-                                if (_feedbackController.text.isNotEmpty) {
-                                  setState(() {
-                                    // Update the feedback
-                                    _feedbackController.text = _feedbackController.text;
-                                  });
-                                  model.updateFeedbackMethod(
-                                    context,
-                                    _feedbackController.text,
-                                    model.complaintRequests[widget.complaintsIndex].userID.toString(),
-                                    model.complaintRequests[widget.complaintsIndex].complaintID.toString(),
-                                  );
-                                }
-                              },
-                              child: Text('Submit Feedback'),
-                            ),
-                          ],
+                        SizedBox(height: 10),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.grey,
                         ),
+                        SizedBox(height: 10),
+                        model.complaintRequests[widget.complaintsIndex]
+                                    .complaintStatus ==
+                                "pending"
+                            ? SizedBox()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Feedback ",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.feedback_outlined,
+                                        size: 20,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 8),
+                                  TextField(
+                                    controller: _feedbackController,
+                                    maxLines: 3,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'Enter your feedback here...',
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_feedbackController.text.isNotEmpty) {
+                                        setState(() {
+                                          // Update the feedback
+                                          _feedbackController.text =
+                                              _feedbackController.text;
+                                        });
+                                        model.updateFeedbackMethod(
+                                          context,
+                                          _feedbackController.text,
+                                          model
+                                              .complaintRequests[
+                                                  widget.complaintsIndex]
+                                              .userID
+                                              .toString(),
+                                          model
+                                              .complaintRequests[
+                                                  widget.complaintsIndex]
+                                              .complaintID
+                                              .toString(),
+                                        );
+                                      }
+                                    },
+                                    child: Text('Submit Feedback'),
+                                  ),
+                                ],
+                              ),
                       ],
                     ),
                   ),
@@ -312,9 +337,8 @@ class _ExpandableJobDescriptionState extends State<ExpandableJobDescription> {
             overflow: TextOverflow.ellipsis,
           ),
           secondChild: Text(widget.complaintDescription),
-          crossFadeState: isExpanded
-              ? CrossFadeState.showSecond
-              : CrossFadeState.showFirst,
+          crossFadeState:
+              isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
           duration: Duration(milliseconds: 300),
         ),
         InkWell(
@@ -328,13 +352,13 @@ class _ExpandableJobDescriptionState extends State<ExpandableJobDescription> {
             children: <Widget>[
               isExpanded
                   ? Text(
-                "Show less",
-                style: TextStyle(color: Colors.blue),
-              )
+                      "Show less",
+                      style: TextStyle(color: Colors.blue),
+                    )
                   : Text(
-                "Show more",
-                style: TextStyle(color: Colors.blue),
-              ),
+                      "Show more",
+                      style: TextStyle(color: Colors.blue),
+                    ),
             ],
           ),
         ),

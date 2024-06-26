@@ -51,28 +51,15 @@ class MyComplaints extends StatelessWidget {
                         horizontal: 15, vertical: 10),
                     child: InkWell(
                       onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            );
-                          },
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                MyComplaintsDetail(
+                                  complaintsIndex: index,
+                                ),
+                          ),
                         );
-                        Future.delayed(Duration(seconds: 1), () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  MyComplaintsDetail(
-                                    complaintsIndex: index,
-                                  ),
-                            ),
-                          );
-                        });
                       },
                       child: Container(
                         width: double.infinity,
@@ -129,6 +116,32 @@ class MyComplaints extends StatelessWidget {
                                             ),
                                           ),
                                         ],
+                                      ),
+
+                                      SizedBox(height: 8,),
+                                      model.complaintRequests[index].complaintStatus == "pending"?
+                                      Text(
+                                        "Pending...",
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey
+                                        ),
+                                      ): model.complaintRequests[index].complaintStatus == "approved"?
+                                      Text(
+                                        "Approved",
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green
+                                        ),
+                                      ):Text(
+                                        "Rejected",
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red
+                                        ),
                                       ),
                                     ],
                                   ),

@@ -5,7 +5,8 @@ import 'dart:convert';
 class NetworkServices {
   /// Use service account credentials to get an authenticated and auto refreshing client.
   static Future<String> obtainAuthenticatedClient() async {
-    final accountCredentials = ServiceAccountCredentials.fromJson({
+    final accountCredentials = ServiceAccountCredentials.fromJson(
+        {
       "type": "service_account",
       "project_id": "hangu-pesco-complaint",
       "private_key_id": "20c19b3801ea8ce77fea24b690e4c9b781219c72",
@@ -21,7 +22,8 @@ class NetworkServices {
       "client_x509_cert_url":
           "https://www.googleapis.com/robot/v1/metadata/x509/hangu-pesco-complaint%40hangu-pesco-complaint.iam.gserviceaccount.com",
       "universe_domain": "googleapis.com"
-    });
+    }
+    );
 
     var scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
 

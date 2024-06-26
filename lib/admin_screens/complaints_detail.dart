@@ -500,17 +500,49 @@ class PendingComplaintsDetail extends StatelessWidget {
                                         fit: BoxFit.fitWidth),
                                   ),
                                 )
-                              : Container(
-                                  height: 200,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 1, color: Colors.grey),
-                                  ),
-                                  child: Center(
-                                      child:
-                                          Text("Image not uploaded  by user!")),
+                              : Row(
+                                  children: [
+                                    Icon(
+                                      Icons.image_outlined,
+                                      size: 20,
+                                    ),
+                                    Text("  Image not uploaded"),
+                                  ],
                                 ),
+                          SizedBox(height: 10),
+                          Divider(
+                            thickness: 1,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Feedback ",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.feedback_outlined,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "${model.pendingComplaints[ComplaintsIndex].feedBack ?? 'no feedback'}",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -737,7 +769,7 @@ class RejectedComplaintsDetail extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          model.rejectComplaints[ComplaintsIndex]
+                          model.urgentPendingComplaints[ComplaintsIndex]
                                       .complaintImage !=
                                   null
                               ? Container(
@@ -755,17 +787,49 @@ class RejectedComplaintsDetail extends StatelessWidget {
                                         fit: BoxFit.fitWidth),
                                   ),
                                 )
-                              : Container(
-                                  height: 200,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 1, color: Colors.grey),
-                                  ),
-                                  child: Center(
-                                      child:
-                                          Text("Image not uploaded  by user!")),
+                              : Row(
+                                  children: [
+                                    Icon(
+                                      Icons.image_outlined,
+                                      size: 20,
+                                    ),
+                                    Text("  Image not uploaded"),
+                                  ],
                                 ),
+                          SizedBox(height: 10),
+                          Divider(
+                            thickness: 1,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Feedback ",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.feedback_outlined,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "${model.urgentPendingComplaints[ComplaintsIndex].feedBack ?? 'no feedback'}",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                            ],
+                          ),
                         ],
                       ),
                     ),

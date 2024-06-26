@@ -16,7 +16,7 @@ void main() async {
   );
   final fcmToken = await FirebaseMessaging.instance.getToken();
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
-  print(fcmToken);
+  print("FCM TOKEN>>>>${fcmToken}");
   runApp(MyApp());
 }
 

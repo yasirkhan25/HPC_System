@@ -176,11 +176,11 @@ class SignUpProvider extends BaseViewModal {
       setState(ViewState.idle);
       print(":::::::::::>>>>${user.phoneNumber}");
       Get.off(
-          user.phoneNumber == "+923306542442" ||
-              user.phoneNumber == "+923100995210"||
-              user.phoneNumber == "+923341965302"
-          ? AdminHome()
-          : UserHome());
+          user.phoneNumber == "+923341965302"||
+              user.phoneNumber == "+923359611715"||
+              user.phoneNumber == "+923069604415"
+              ? AdminHome()
+              : UserHome());
     }
   }
 

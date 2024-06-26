@@ -15,192 +15,200 @@ class GetMeterRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AllComplaintProvider>(
-        builder: (context, model, child) {
-          Size size = MediaQuery.of(context).size;
-          return ModalProgressHUD(
-            progressIndicator: CircularProgressIndicator(
-              color: PrimaryColor,
-            ),
-            inAsyncCall: model.state == ViewState.busy,
-            child: SafeArea(
-              child: Scaffold(
-                  appBar: AppBar(
-                    title: Text(
-                      "Meter Requests",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    backgroundColor: const Color.fromRGBO(31, 79, 143, 1.0),
-                    centerTitle: true,
-                    leading: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back, color: Colors.white)),
-                  ),
-                  body: model.meterRequest.length != 0 ? SizedBox(
-                    height: size.height,
-                    child: ListView.builder(
-                      itemCount: model.meterRequest.length,
-                      shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-
-                          child: InkWell(
-                            onTap: () {
-                              currentIndex = index;
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
+    return Consumer<AllComplaintProvider>(builder: (context, model, child) {
+      Size size = MediaQuery.of(context).size;
+      return ModalProgressHUD(
+        progressIndicator: CircularProgressIndicator(
+          color: PrimaryColor,
+        ),
+        inAsyncCall: model.state == ViewState.busy,
+        child: SafeArea(
+          child: Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  "Meter Requests",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                backgroundColor: const Color.fromRGBO(31, 79, 143, 1.0),
+                centerTitle: true,
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back, color: Colors.white)),
+              ),
+              body: model.meterRequest.length != 0
+                  ? SizedBox(
+                      height: size.height,
+                      child: ListView.builder(
+                        itemCount: model.meterRequest.length,
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: InkWell(
+                              onTap: () {
+                                currentIndex = index;
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    );
+                                  },
+                                );
+                                Future.delayed(Duration(seconds: 1), () {
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MeterRequestDetail(
+                                        RequestIndex: currentIndex,
+                                      ),
                                     ),
                                   );
-                                },
-                              );
-                              Future.delayed(Duration(seconds: 1), () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MeterRequestDetail(
-                                      RequestIndex: currentIndex,),
-                                  ),
-                                );
-                              });
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(width: 0.5,color: Colors.grey),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    blurRadius: 3,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${model.meterRequest[index].meterTitle}",
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Text(
-                                                  "Posted Date: ",
-                                                  style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: Colors.grey,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "${model.dataFormate(model.meterRequest[index].createdAt.toString())}",
-                                                  style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: Colors.grey,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-
-                                        Icon(Icons.arrow_forward_ios_rounded,color: Colors.grey,)
-
-                                      ],
+                                });
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      width: 0.5, color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      blurRadius: 3,
+                                      offset: Offset(0, 3),
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    // Padding(
-                                    //   padding: EdgeInsets.only(left: size.width * 0.1,top: 10,bottom: 5,right: 10),
-                                    //   child: Row(
-                                    //     children: [
-                                    //       Expanded(
-                                    //         child: InkWell(
-                                    //           onTap: () async {
-                                    //             model.updateComplaintRequest(context,"approved",
-                                    //                 model.complaintModel,
-                                    //                 index);
-                                    //
-                                    //           },
-                                    //           child: Container(
-                                    //             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                                    //             decoration: BoxDecoration(
-                                    //                 color: Colors.blue,
-                                    //                 borderRadius: BorderRadius.circular(5)
-                                    //             ),
-                                    //             child: Center(child: Text("Confirm",style: TextStyle(color: Colors.white),)),
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //       SizedBox(width: 10),
-                                    //       Expanded(
-                                    //         child: InkWell(
-                                    //           onTap: () async {
-                                    //             model.updateComplaintRequest(context,"rejected",
-                                    //                 model.complaintModel,
-                                    //                 index);
-                                    //
-                                    //           },
-                                    //           child: Container(
-                                    //             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                                    //             decoration: BoxDecoration(
-                                    //                 color: Colors.white,
-                                    //                 border: Border.all(width: 0.5,color: Colors.grey),
-                                    //                 borderRadius: BorderRadius.circular(5)
-                                    //             ),
-                                    //             child: Center(child: Text("Delete",style: TextStyle(color: Colors.black),)),
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // )
                                   ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${model.meterRequest[index].meterTitle}",
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Text(
+                                                    "Posted Date: ",
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "${model.dataFormate(model.meterRequest[index].createdAt.toString())}",
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            color: Colors.grey,
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      // Padding(
+                                      //   padding: EdgeInsets.only(left: size.width * 0.1,top: 10,bottom: 5,right: 10),
+                                      //   child: Row(
+                                      //     children: [
+                                      //       Expanded(
+                                      //         child: InkWell(
+                                      //           onTap: () async {
+                                      //             model.updateComplaintRequest(context,"approved",
+                                      //                 model.complaintModel,
+                                      //                 index);
+                                      //
+                                      //           },
+                                      //           child: Container(
+                                      //             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                                      //             decoration: BoxDecoration(
+                                      //                 color: Colors.blue,
+                                      //                 borderRadius: BorderRadius.circular(5)
+                                      //             ),
+                                      //             child: Center(child: Text("Confirm",style: TextStyle(color: Colors.white),)),
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //       SizedBox(width: 10),
+                                      //       Expanded(
+                                      //         child: InkWell(
+                                      //           onTap: () async {
+                                      //             model.updateComplaintRequest(context,"rejected",
+                                      //                 model.complaintModel,
+                                      //                 index);
+                                      //
+                                      //           },
+                                      //           child: Container(
+                                      //             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                                      //             decoration: BoxDecoration(
+                                      //                 color: Colors.white,
+                                      //                 border: Border.all(width: 0.5,color: Colors.grey),
+                                      //                 borderRadius: BorderRadius.circular(5)
+                                      //             ),
+                                      //             child: Center(child: Text("Delete",style: TextStyle(color: Colors.black),)),
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                      : Container(height: size.height,width: size.width,child: Center(child: Text("No Request...\n\n\n\n\n\n",style: TextStyle(fontSize: 16,color: PrimaryColor),)))
-              ),
-            ),
-          );
-        }
-    );
+                          );
+                        },
+                      ),
+                    )
+                  : Container(
+                      height: size.height,
+                      width: size.width,
+                      child: Center(
+                          child: Text(
+                        "No Request...\n\n\n\n\n\n",
+                        style: TextStyle(fontSize: 16, color: PrimaryColor),
+                      )))),
+        ),
+      );
+    });
   }
 }
-
-
 
 class MeterRequestDetail extends StatelessWidget {
   final RequestIndex;
@@ -241,11 +249,20 @@ class MeterRequestDetail extends StatelessWidget {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: const Icon(Icons.clear,color: Colors.white,)
-                          ),
+                              child: const Icon(
+                                Icons.clear,
+                                color: Colors.white,
+                              )),
                         ],
                       ),
-                      const Text("HANGU PESCO\nMETER REQUEST DETAIL",textAlign: TextAlign.center,style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),)
+                      const Text(
+                        "HANGU PESCO\nMETER REQUEST DETAIL",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      )
                     ],
                   ),
                 ),
@@ -284,7 +301,7 @@ class MeterRequestDetail extends StatelessWidget {
                           ),
                           Center(
                             child: Container(
-                              width: size.width/1.5,
+                              width: size.width / 1.5,
                               child: Column(
                                 children: [
                                   Text(
@@ -293,15 +310,16 @@ class MeterRequestDetail extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),
                                   ),
-
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "Posted Date:   ",
@@ -310,7 +328,6 @@ class MeterRequestDetail extends StatelessWidget {
                                                 fontSize: 13,
                                                 color: Colors.grey),
                                           ),
-
                                           Text(
                                             "Location:   ",
                                             style: TextStyle(
@@ -318,7 +335,6 @@ class MeterRequestDetail extends StatelessWidget {
                                                 fontSize: 13,
                                                 color: Colors.grey),
                                           ),
-
                                           Text(
                                             "Meter Request by:   ",
                                             style: TextStyle(
@@ -326,7 +342,6 @@ class MeterRequestDetail extends StatelessWidget {
                                                 fontSize: 13,
                                                 color: Colors.grey),
                                           ),
-
                                           Text(
                                             "Phone no:   ",
                                             style: TextStyle(
@@ -336,9 +351,9 @@ class MeterRequestDetail extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "${model.dataFormate(model.meterRequest[RequestIndex].createdAt.toString())}",
@@ -347,7 +362,6 @@ class MeterRequestDetail extends StatelessWidget {
                                                 fontSize: 13,
                                                 color: Colors.grey),
                                           ),
-
                                           Text(
                                             "${model.meterRequest[RequestIndex].meterLocation}",
                                             style: TextStyle(
@@ -355,7 +369,6 @@ class MeterRequestDetail extends StatelessWidget {
                                                 fontSize: 13,
                                                 color: Colors.grey),
                                           ),
-
                                           Text(
                                             "${model.meterRequest[RequestIndex].userName}",
                                             style: const TextStyle(
@@ -363,7 +376,6 @@ class MeterRequestDetail extends StatelessWidget {
                                                 fontSize: 13,
                                                 color: Colors.grey),
                                           ),
-
                                           Text(
                                             "${model.meterRequest[RequestIndex].userPhoneNo}",
                                             style: const TextStyle(
@@ -379,15 +391,13 @@ class MeterRequestDetail extends StatelessWidget {
                               ),
                             ),
                           ),
-
                           const SizedBox(
                             height: 40,
                           ),
                           complaintDescription(
                             complaintDes:
-                            "${model.meterRequest[RequestIndex].meterDescription}",
+                                "${model.meterRequest[RequestIndex].meterDescription}",
                           ),
-
                           const SizedBox(
                             height: 20,
                           ),
@@ -396,54 +406,51 @@ class MeterRequestDetail extends StatelessWidget {
                               "Payment Receipt Image",
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 15,),
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                           SizedBox(
                             height: 10,
                           ),
-                          model.meterRequest[RequestIndex].meterPaymentImage != null
+                          model.meterRequest[RequestIndex].meterPaymentImage !=
+                                  null
                               ? Center(
-                                child: Container(
-                                                            height: 300,
-                                                            width: size.width/1.8,
-                                                            decoration: BoxDecoration(
-                                border: Border.all(width: 1,color: Colors.grey),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        model.meterRequest[RequestIndex].meterPaymentImage.toString())
-                                    as ImageProvider,
-                                    fit: BoxFit.fitWidth),
-                                                            ),
-                                                          ),
-                              ):
-                          Center(
-                            child: Container(
-                              height: 300,
-                              width: size.width/1.8,
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 1,color: Colors.grey),
-
-                              ),
-                              child: Center(child: Text("Image not uploaded  by user!")),
-                            ),
-                          ),
+                                  child: Container(
+                                    height: 300,
+                                    width: size.width / 1.8,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1, color: Colors.grey),
+                                      image: DecorationImage(
+                                          image: NetworkImage(model
+                                              .meterRequest[RequestIndex]
+                                              .meterPaymentImage
+                                              .toString()) as ImageProvider,
+                                          fit: BoxFit.fitWidth),
+                                    ),
+                                  ),
+                                )
+                              : const Center(
+                              child: Text(
+                                  "Image not uploaded  by user!")),
                         ],
                       ),
                     ),
                   ),
                 ),
               ),
-
               Positioned(
                 top: MediaQuery.of(context).size.height *
                     0.13, // Adjust the vertical position as needed
                 left: MediaQuery.of(context).size.width * 0.5 - 45,
                 child: Align(
                   alignment: Alignment.center,
-                  child: Image.asset("asset/logo.png",height: 90,),
+                  child: Image.asset(
+                    "asset/logo.png",
+                    height: 90,
+                  ),
                 ),
-
               ),
             ],
           ),

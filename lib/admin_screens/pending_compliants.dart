@@ -52,26 +52,13 @@ class PendingComplaints extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           currentIndex = index;
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              );
-                            },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PendingComplaintsDetail(
+                                ComplaintsIndex: currentIndex,),
+                            ),
                           );
-                          Future.delayed(Duration(seconds: 1), () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PendingComplaintsDetail(
-                                  ComplaintsIndex: currentIndex,),
-                              ),
-                            );
-                          });
                         },
                         child: Container(
                           width: double.infinity,

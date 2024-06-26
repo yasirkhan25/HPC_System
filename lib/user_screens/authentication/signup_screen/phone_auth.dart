@@ -69,6 +69,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                           child: SingleChildScrollView(
                             child: Form(
+                              key: model.formKey,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -138,7 +139,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                               },
                                               validator: (value) {
                                                 if (value == null || value.isEmpty) {
-                                                  return "Please enter your Email";
+                                                  return "Please enter your phone no";
                                                 }
                                                 return null;
                                               },
@@ -206,12 +207,13 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                                         ),
                                         child: TextButton(
                                           onPressed: () {
+                               if (model.formKey.currentState!.validate()) {
                                             if (model.otpSent) {
                                               model.verifyOTP(context,model.phoneController.text);
                                             } else {
                                               model.sendOTP(context,model.phoneController.text);
                                             }
-                                          },
+                                          }},
 
                                           child: Text(
                                                   model.otpSent ? "Verify OTP" : "Send OTP",

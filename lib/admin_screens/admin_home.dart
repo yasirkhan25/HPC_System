@@ -30,6 +30,7 @@ class _AdminHomeState extends State<AdminHome> {
       MaterialPageRoute(builder: (context) => PhoneAuthScreen()),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     var mediaquery = MediaQuery.of(context).size;
@@ -45,7 +46,10 @@ class _AdminHomeState extends State<AdminHome> {
           centerTitle: true,
           actions: [
             IconButton(
-              icon: Icon(Icons.exit_to_app,color: Colors.white,),
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Colors.white,
+              ),
               onPressed: () => _signOut(context),
             ),
           ],
@@ -111,25 +115,10 @@ class _AdminHomeState extends State<AdminHome> {
                   imagePath: "asset/pending_complaints.png",
                   text: "Pending\nComplaints",
                   onTap: () async {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    );
-
-                    await Future.delayed(
-                        Duration(seconds: 1));
-
-                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  PendingComplaints(),
+                        builder: (context) => PendingComplaints(),
                       ),
                     );
                   },
@@ -139,22 +128,7 @@ class _AdminHomeState extends State<AdminHome> {
                 MyCard(
                   imagePath: "asset/accepted_complaints.png",
                   text: "Accepted\nComplaints",
-                  onTap: ()async {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    );
-
-                    await Future.delayed(
-                        Duration(seconds: 1));
-
-                    Navigator.pop(context);
+                  onTap: () async {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -177,25 +151,10 @@ class _AdminHomeState extends State<AdminHome> {
                   imagePath: "asset/rejected_complaints.png",
                   text: "Emergency\nComplaints!!!",
                   onTap: () async {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    );
-
-                    await Future.delayed(
-                        Duration(seconds: 1));
-
-                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  RejectedComplaints(),
+                        builder: (context) => RejectedComplaints(),
                       ),
                     );
                   },
@@ -204,22 +163,7 @@ class _AdminHomeState extends State<AdminHome> {
                 MyCard(
                   imagePath: "asset/accepted_complaints.png",
                   text: "Meter\nRequest",
-                  onTap: ()async {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    );
-
-                    await Future.delayed(
-                        Duration(seconds: 1));
-
-                    Navigator.pop(context);
+                  onTap: () async {
                     Navigator.push(
                       context,
                       MaterialPageRoute(

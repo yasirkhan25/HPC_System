@@ -11,11 +11,10 @@ class MyComplaints extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ComplaintProvider>(
-        builder: (context, model, child) {
-          Size size = MediaQuery.of(context).size;
-          return SafeArea(
-          child: Scaffold(
+    return Consumer<ComplaintProvider>(builder: (context, model, child) {
+      Size size = MediaQuery.of(context).size;
+      return SafeArea(
+        child: Scaffold(
             appBar: AppBar(
               title: Text(
                 "My Complaints",
@@ -29,139 +28,173 @@ class MyComplaints extends StatelessWidget {
                   },
                   icon: const Icon(Icons.arrow_back, color: Colors.white)),
             ),
-            body: model.isLoading? Container(
-              height: size.height,
-              width: size.width,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: PrimaryColor,
-                ),
-              ),
-            ): model.complaintRequests.isNotEmpty? Container(
-              height: double.infinity,
-              width: double.infinity,
-              padding: EdgeInsets.only(top: 10),
-              child: ListView.builder(
-                itemCount: model.complaintRequests.length,
-                shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                MyComplaintsDetail(
-                                  complaintsIndex: index,
-                                ),
-                          ),
-                        );
-                      },
-                      child: Container(
+            body: model.isLoading
+                ? Container(
+                    height: size.height,
+                    width: size.width,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: PrimaryColor,
+                      ),
+                    ),
+                  )
+                : model.complaintRequests.isNotEmpty
+                    ? Container(
+                        height: double.infinity,
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(width: 0.5,color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              blurRadius: 3,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-
-                                  SizedBox(
-                                    width: 12,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${model.complaintRequests[index].complaintTitle}",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                        padding: EdgeInsets.only(top: 10),
+                        child: ListView.builder(
+                          itemCount: model.complaintRequests.length,
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MyComplaintsDetail(
+                                        complaintsIndex: index,
                                       ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Complaint Date: ",
-                                            style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          Text(
-                                            "${model.dataFormate(model.complaintRequests[index].createdAt.toString())}",
-                                            style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-
-                                      SizedBox(height: 8,),
-                                      model.complaintRequests[index].complaintStatus == "pending"?
-                                      Text(
-                                        "Pending...",
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey
-                                        ),
-                                      ): model.complaintRequests[index].complaintStatus == "approved"?
-                                      Text(
-                                        "Approved",
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.green
-                                        ),
-                                      ):Text(
-                                        "Rejected",
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.red
-                                        ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  width: size.width,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        width: 0.5, color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        blurRadius: 3,
+                                        offset: const Offset(0, 3),
                                       ),
                                     ],
                                   ),
-                                ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "${model.complaintRequests[index].complaintTitle}",
+                                                  style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: size.width * 0.2,
+                                                ),
+                                                model.complaintRequests[index]
+                                                            .inProgress ==
+                                                        "inProgress"
+                                                    ? Text(
+                                                        "${model.complaintRequests[index].inProgress} ",
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Colors
+                                                              .blue.shade900,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      )
+                                                    : SizedBox(),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                  "Complaint Date: ",
+                                                  style: TextStyle(
+                                                    fontSize: 11,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  model.dataFormate(model
+                                                      .complaintRequests[index]
+                                                      .createdAt
+                                                      .toString()),
+                                                  style: const TextStyle(
+                                                    fontSize: 11,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            model.complaintRequests[index]
+                                                        .complaintStatus ==
+                                                    "pending"
+                                                ? const Text(
+                                                    "Pending...",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.grey),
+                                                  )
+                                                : model.complaintRequests[index]
+                                                            .complaintStatus ==
+                                                        "approved"
+                                                    ? const Text(
+                                                        "Approved",
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.green),
+                                                      )
+                                                    : const Text(
+                                                        "Rejected",
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.red),
+                                                      ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            )
-                : Container(height: size.height,width: size.width,child: Center(child: Text("No Complaints...\n\n\n\n\n\n",style: TextStyle(fontSize: 16,color: PrimaryColor),)))
-
-          ),
-                    );
-      }
-    );
+                      )
+                    : Container(
+                        height: size.height,
+                        width: size.width,
+                        child: Center(
+                            child: Text(
+                          "No Complaints...\n\n\n\n\n\n",
+                          style: TextStyle(fontSize: 16, color: PrimaryColor),
+                        )))),
+      );
+    });
     ;
   }
 }

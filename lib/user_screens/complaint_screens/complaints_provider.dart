@@ -41,7 +41,7 @@ class ComplaintProvider extends BaseViewModal {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userID = await prefs.getString('userId');
     fcmToken = await prefs.getString('fcmToken');
-    getAllComplaints(userID);
+    getAllComplaints("HJarQUCNK3dCt8xSaTy10fdYbPv2");
 
     notifyListeners();
   }

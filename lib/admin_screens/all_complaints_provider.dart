@@ -122,6 +122,37 @@ class AllComplaintProvider extends BaseViewModal {
     }
   }
 
+ /// Approved Request Function ========>>>
+  updateComplaintInProgress(BuildContext context, String inProgress,
+      ComplaintModel complaintModel, int index) async {
+    setState(ViewState.busy);
+    try {
+      await NetworkServices.sendNotification(
+          title: pendingComplaints[index].complaintTitle,
+          token: pendingComplaints[index].fcmToken,
+          body: "your complaint is in progress...");
+      // print(complaintStatus);
+      complaintModel.inProgress = inProgress;
+
+      await databaseServices.UpdateInProgress(
+          complaintModel,
+          pendingComplaints[index].complaintID,
+          pendingComplaints[index].userID);
+
+      setState(ViewState.idle);
+
+      await ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('complaint added to progress!'),
+        ),
+      );
+      setState(ViewState.idle);
+    } catch (e) {
+      setState(ViewState.idle);
+
+    }
+  }
+
   /// emergency Request Function ========>>>
   updateUrgentComplaintRequest(BuildContext context, String complaintStatus,
       ComplaintModel complaintModel, int index) async {
@@ -156,6 +187,7 @@ class AllComplaintProvider extends BaseViewModal {
       print("Error in update complaint request: $e");
     }
   }
+
 
   /// Date Format Method >>>>
   String dataFormate(String date) {

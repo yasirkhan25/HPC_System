@@ -103,6 +103,16 @@ class DatabaseServices {
       print('Exception@UpdateComplaintStatus=>$e');
     }
   }
+  ///  Update Complaints to progress=====>>>
+  UpdateInProgress(ComplaintModel complaintModel,id,userID) async {
+    try {
+      await FirebaseFirestore.instance.collection('AllComplaints').doc(userID)
+          .collection("Complaints").doc(id)
+          .update({'inProgress':complaintModel.inProgress});
+    } catch (e) {
+      print('Exception@UpdateComplaintToProgressStatus=>$e');
+    }
+  }
 
   ///  Update Complaints =====>>>
   UpdateFeedback(ComplaintModel complaintModel,userId,complaintId) async {

@@ -16,6 +16,7 @@ class ComplaintModel extends ChangeNotifier {
   String? userPhoneNo;
   String? complaintReferenceNo;
   String? complaintStatus;
+  String? inProgress;
   String? createdAt;
 
   ComplaintModel({
@@ -33,6 +34,7 @@ class ComplaintModel extends ChangeNotifier {
     this.userPhoneNo,
     this.complaintReferenceNo,
     this.complaintStatus,
+    this.inProgress,
     this.createdAt,
   });
 
@@ -51,6 +53,7 @@ class ComplaintModel extends ChangeNotifier {
     this.userPhoneNo = json['userPhoneNo'];
     this.complaintReferenceNo = json['complaintReferenceNo'];
     this.complaintStatus = json['complaintStatus'];
+    this.inProgress = json['inProgress']??'';
     this.createdAt = json['createdAt'];
   }
   toJson() {
@@ -69,6 +72,7 @@ class ComplaintModel extends ChangeNotifier {
       'userPhoneNo': this.userPhoneNo,
       'complaintReferenceNo': this.complaintReferenceNo,
       'complaintStatus': this.complaintStatus,
+      'inProgress': this.inProgress,
       'createdAt': this.createdAt,
     };
   }

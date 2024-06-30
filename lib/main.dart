@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hangu_pesco_complaints_system/admin_screens/admin_home.dart';
 import 'package:hangu_pesco_complaints_system/splash_screen.dart';
 import 'package:hangu_pesco_complaints_system/user_screens/complaint_screens/complaints_provider.dart';
+import 'package:hangu_pesco_complaints_system/user_screens/user_home/user_home.dart';
 import 'package:provider/provider.dart';
 import 'admin_screens/all_complaints_provider.dart';
 import 'firebase_options.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const SplashScreen(),
+        home: const UserHome(),
       ),
     );
   }

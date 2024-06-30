@@ -15,16 +15,15 @@ class PendingComplaints extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AllComplaintProvider>(
-        builder: (context, model, child) {
-          Size size = MediaQuery.of(context).size;
-          return ModalProgressHUD(
-            progressIndicator: CircularProgressIndicator(
-              color: PrimaryColor,
-            ),
-            inAsyncCall: model.state == ViewState.busy,
-            child: SafeArea(
-            child: Scaffold(
+    return Consumer<AllComplaintProvider>(builder: (context, model, child) {
+      Size size = MediaQuery.of(context).size;
+      return ModalProgressHUD(
+        progressIndicator: CircularProgressIndicator(
+          color: PrimaryColor,
+        ),
+        inAsyncCall: model.state == ViewState.busy,
+        child: SafeArea(
+          child: Scaffold(
               appBar: AppBar(
                 title: Text(
                   "Pending Complaints",
@@ -38,151 +37,241 @@ class PendingComplaints extends StatelessWidget {
                     },
                     icon: const Icon(Icons.arrow_back, color: Colors.white)),
               ),
-              body: model.pendingComplaints.length != 0 ? SizedBox(
-                height: size.height,
-                child: ListView.builder(
-                  itemCount: model.pendingComplaints.length,
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-
-                      child: InkWell(
-                        onTap: () {
-                          currentIndex = index;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PendingComplaintsDetail(
-                                ComplaintsIndex: currentIndex,),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(width: 0.5,color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 3,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${model.pendingComplaints[index].complaintTitle}",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+              body: model.pendingComplaints.length != 0
+                  ? SizedBox(
+                      height: size.height,
+                      child: ListView.builder(
+                        itemCount: model.pendingComplaints.length,
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: InkWell(
+                              onTap: () {
+                                currentIndex = index;
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PendingComplaintsDetail(
+                                      ComplaintsIndex: currentIndex,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      width: 0.5, color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      blurRadius: 3,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${model.pendingComplaints[index].complaintTitle}",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Posted Date: ",
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "${model.dataFormate(model.pendingComplaints[index].createdAt.toString())}",
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
+                                          Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            color: Colors.grey,
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: size.width * 0.1,
+                                            top: 10,
+                                            bottom: 5,
+                                            right: 10),
+                                        child: Row(
                                           children: [
-                                            Text(
-                                              "Posted Date: ",
-                                              style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey,
+                                            Expanded(
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  model.updateComplaintRequest(
+                                                      context,
+                                                      "approved",
+                                                      model.complaintModel,
+                                                      index);
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.blue,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: Center(
+                                                      child: Text(
+                                                    "Confirm",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  )),
+                                                ),
                                               ),
                                             ),
-                                            Text(
-                                              "${model.dataFormate(model.pendingComplaints[index].createdAt.toString())}",
-                                              style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey,
+                                            SizedBox(width: 10),
+                                            Expanded(
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  model.updateComplaintRequest(
+                                                      context,
+                                                      "rejected",
+                                                      model.complaintModel,
+                                                      index);
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      border: Border.all(
+                                                          width: 0.5,
+                                                          color: Colors.grey),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: Center(
+                                                      child: Text(
+                                                    "Delete",
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                  )),
+                                                ),
                                               ),
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-
-                                    Icon(Icons.arrow_forward_ios_rounded,color: Colors.grey,)
-
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: size.width * 0.1,top: 10,bottom: 5,right: 10),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: InkWell(
-                                          onTap: () async {
-                                            model.updateComplaintRequest(context,"approved",
-                                                model.complaintModel,
-                                                index);
-
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                                            decoration: BoxDecoration(
-                                              color: Colors.blue,
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                            child: Center(child: Text("Confirm",style: TextStyle(color: Colors.white),)),
-                                          ),
-                                        ),
                                       ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        child: InkWell(
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child:
+
+                                        model
+                                            .pendingComplaints[
+                                        index]
+                                            .inProgress ==
+                                            "inProgress"
+                                            ? Center(
+                                              child: Text(" Complaint is in progress",
+                                                                                        style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                                color:
+                                                Colors.green),
+                                                                                      ),
+                                            ):
+                                        InkWell(
                                           onTap: () async {
-                                            model.updateComplaintRequest(context,"rejected",
+                                            model.updateComplaintInProgress(
+                                                context,
+                                                "inProgress",
                                                 model.complaintModel,
                                                 index);
-
                                           },
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              border: Border.all(width: 0.5,color: Colors.grey),
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                            child: Center(child: Text("Delete",style: TextStyle(color: Colors.black),)),
-                                          ),
+                                              width: 120,
+                                              height: 25,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10, vertical: 3),
+                                              margin:
+                                                  EdgeInsets.only(right: 10),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      width: 0.5,
+                                                      color: Colors.grey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Center(
+                                                  child:  Text(
+                                                          "add to progress",
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              color:
+                                                                  Colors.black),
+                                                        )
+                                              )),
                                         ),
                                       ),
                                     ],
                                   ),
-                                )
-                              ],
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              )
-                  : Container(height: size.height,width: size.width,child: Center(child: Text("No Complaints...\n\n\n\n\n\n",style: TextStyle(fontSize: 16,color: PrimaryColor),)))
-            ),
-                    ),
-          );
-      }
-    );
+                    )
+                  : Container(
+                      height: size.height,
+                      width: size.width,
+                      child: Center(
+                          child: Text(
+                        "No Complaints...\n\n\n\n\n\n",
+                        style: TextStyle(fontSize: 16, color: PrimaryColor),
+                      )))),
+        ),
+      );
+    });
   }
 }
